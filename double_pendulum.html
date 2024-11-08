@@ -7,16 +7,15 @@
     <style>
         body { 
             margin: 0; 
-            display: flex; 
             justify-content: center; 
             align-items: center; 
-            height: 100vh; 
+            height: 80vh; 
             background: #ffffff; 
             overflow: hidden; 
         }
         canvas { 
             display: block; 
-            width: 90vw; /* Set width to 90% of the viewport width */
+            width: 80vw; /* Set width to 90% of the viewport width */
             height: auto; /* Maintain aspect ratio */
         }
         #controls { 
@@ -38,6 +37,10 @@
     </style>
 </head>
 <body>
+<div>
+<H1>Interactive Double Pendulum</H1>
+<p>Drag the bobs around to set the starting postion of the red and blue pendulums and then start the simulation. You can stop and edit it anytime.</p>
+</div>
 
 <div id="controls">
     <button id="startButton">Start Simulation</button>
@@ -136,7 +139,7 @@
 
     // Blue Pendulum (Copy)
     const bluePendulum1Group = new THREE.Group();
-    const blueArm1 = new THREE.Mesh(armGeometry1, blueMaterial);
+    const blueArm1 = new THREE.Mesh(new THREE.BoxGeometry(armWidthBlue, length2, armWidthBlue), blueMaterial);
     blueArm1.position.y = -length1 / 2;
     const blueBob1 = new THREE.Mesh(bobGeometry, blueMaterial);
     blueBob1.position.y = -length1;
