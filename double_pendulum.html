@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Double Pendulum Simulation</title>
     <style>
-        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #ffffff; } /* Background color set to white */
-        canvas { display: block; }
-        #controls { position: fixed; bottom: 20px; left: 20px; color: black; font-family: Arial, sans-serif; } /* Control text color */
+        body {
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background: #ffffff; /* Background color set to white */
+            overflow: hidden; /* Prevent scrolling */
+        }
+        canvas { 
+            display: block; 
+            width: 90vw; /* Set width to 90% of the viewport width */
+            height: auto; /* Maintain aspect ratio */
+        }
+        #controls { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 20px; 
+            color: black; 
+            font-family: Arial, sans-serif; /* Control text color */
+        }
     </style>
 </head>
 <body>
@@ -30,20 +48,25 @@
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-300, 300, 200, -200, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true }); // Allow transparency
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.9); // Set canvas size to 90% of the viewport
     renderer.setClearColor(0xffffff, 1); // Set background color to white
     document.body.appendChild(renderer.domElement);
 
     camera.position.z = 500;
 
     // Update camera aspect ratio and renderer size on window resize
-    window.addEventListener('resize', () => {
-        const aspect = window.innerWidth / window.innerHeight;
+    function updateCamera() {
+        const aspect = (window.innerWidth * 0.9) / (window.innerHeight * 0.9);
         camera.left = -300 * aspect;
         camera.right = 300 * aspect;
+        camera.top = 200;   // Set top based on height
+        camera.bottom = -200; // Set bottom based on height
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+        renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.9); // Update size
+    }
+
+    window.addEventListener('resize', updateCamera);
+    updateCamera(); // Call initially to set up camera
 
     // Pendulum properties
     const length1 = 80;
@@ -115,7 +138,6 @@
     hitArea3.position.copy(blueBob1.position);
     hitArea3.userData.draggable = true;
     bluePendulum1Group.add(blueArm1, blueBob1, hitArea3);
-    bluePendulum1Group.position.x = 120;  // Offset for side-by-side
     bluePendulum1Group.position.z = 5;    // Move the blue pendulum slightly forward
     scene.add(bluePendulum1Group);
 
