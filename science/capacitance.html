@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FLAME Showcase page</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+<style>
+    model-viewer {
+        width: 800px;
+        height: 600px;
+     }
+        input[type=range]::-webkit-slider-thumb {
+        height : 75px;
+        width : 75px;
+     }
+    body {
+    margin: 50px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+ .container {
+    max-width: 800px;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Parallel Plate Capacitor</h1>
+<div>
+<p>Richard is studying to become a teacher focusing on maths, science and physics. 
+This demo illustrates the effect of capacitance, plate overlap area and the resulting change in the behaviour of the gold leaf electroscope.
+This type of animation can be used to prepare students for what they will observe in an upcoming experiment or to offer an experience not physically available to them.
+</p>
+</div>
+<div class="container">
+Created by Richard Downey
+</div>
+<div>
+<model-viewer 
+    src="https://nolankucd.github.io/FLAME/Capacitor Area.glb"
+    camera-controls
+    alt="Parallel plate capacitor demonstration with an electroscope"
+    camera-orbit="132deg 66deg 17m" field-of-view="33deg"
+    interaction-Prompt="none"
+    autoplay>
+</model-viewer>
+
+</div>
+</body>
+</html>
