@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Demo 4: Turbomachinery</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+<style>
+    model-viewer {
+        width: 800px;
+        height: 600px;
+     }
+        input[type=range]::-webkit-slider-thumb {
+        height : 75px;
+        width : 75px;
+     }
+       body {
+       margin: 50px;
+       padding: 20px;
+       font-family: Arial, sans-serif;
+     }
+      .container {
+      max-width: 800px;
+      margin-bottom: 20px;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>Demo 4: Radial Compressor</h1>
+<p>
+This exmaple allows interaction with a 3D model of a turbocharger compressor stage.
+Use the sliders to control the rotation of the impeller and the twist of the blades.
+This can help students better understand the velocity triangles used to describe the flow direction in these complex shapes which is notoriously difficult in 2D images.</p>
+
+<model-viewer 
+    id="compressor-demo"
+    src="https://nolankucd.github.io/FLAME/compressor.glb"
+    scale="0.2 0.2 0.2"
+    autoplay animation-name="spin" 
+    ar 
+    ar-scale="auto" 
+    camera-controls
+    alt="A compressor"
+    xr-environment
+    background-color="#ffffff">
+    <button slot="ar-button">
+      🔥 View in AR 🔥
+    </button>
+</model-viewer>
+    
+<div class="controls">
+    <div>
+        <p>Speed: <span id="speed-value"></span></p>
+        <input id="speed" type="range" style="width: 400px;" min="0" max="1" step="0.01" value="1">
+    </div>
+    <div>
+        <p>Twist: <span id="twist-value"></span></p>
+        <input id="twist" type="range" style="width: 400px;" min="0" max="2" step="0.01" value="0">
+    </div>
+</div>
+<p><a href = "https://nolankucd.github.io/FLAME/">Return to main page</a></p>
+</div>
+    
+<script type="module">
+const modelViewer = document.querySelector("#compressor-demo");
+const speedSlider = document.querySelector("#speed");
+const twistSlider = document.querySelector("#twist");
+
+modelViewer.interactionPrompt = 'none';
+
+speedSlider.addEventListener("input", (event) => {
+  modelViewer.animationName = 'spin';
+  modelViewer.timeScale = event.target.value;
+  modelViewer.play();
+});
+
+twistSlider.addEventListener('input', event => {
+  modelViewer.animationName = 'twist';
+  modelViewer.timeScale = 1;
+  modelViewer.currentTime = event.target.value;
+  modelViewer.pause();
+});
+
+const play = () => {
+  modelViewer.play();
+};
+
+modelViewer.addEventListener('load', play);
+modelViewer.addEventListener('finished', play);
+
+</script>
+  
+</body>
+</html>
