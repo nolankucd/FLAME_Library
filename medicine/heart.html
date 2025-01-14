@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>FLAME Focus Group Demo</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+<style>
+    model-viewer {
+        width: 800px;
+        height: 1200px;
+     }
+        input[type=range]::-webkit-slider-thumb {
+        height : 75px;
+        width : 75px;
+     }
+       body {
+       margin: 50px;
+       padding: 20px;
+       font-family: Arial, sans-serif;
+     }
+      .container {
+      max-width: 800px;
+      margin-bottom: 20px;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>Focus Groups Demo: The human heart</h1>
+<p>
+Compare this 2D image of the heart to the interactive 3D model below.
+</p>
+
+<div class="container">
+    <img src="https://nolankucd.github.io/FLAME/heart2d.png" width="600" height=auto alt="A 2D image of a human heart">
+</div>
+
+<model-viewer 
+    id="heart-demo"
+    src="https://nolankucd.github.io/FLAME/heart.glb"
+    autoplay animation-name="Animation" 
+    scale="0.5 0.5 0.5"
+    ar
+    camera-controls
+    alt="A compressor"
+    xr-environment
+    background-color="#ffffff">
+    <button slot="ar-button">
+      🔥 View in AR 🔥
+    </button>
+</model-viewer>
+    
+<div class="controls">
+    <div>
+        <p>Playback speed: <span id="speed-value"X></span></p>
+        <input id="speed" type="range" style="width: 400px;" min="0" max="10" step="0.1" value="1">
+    </div>
+    <div>
+        <p>Select a single frame: <span id="frame-value"></span></p>
+        <input id="frame" type="range" style="width: 400px;" min="0" max="4.08" step="0.0416" value="0">
+    </div>
+</div>
+<p><a href = "https://nolankucd.github.io/FLAME/">Return to main page</a></p>
+</div>
+    
+<script type="module">
+const modelViewer = document.querySelector("#heart-demo");
+const speedSlider = document.querySelector("#speed");
+const frameSlider = document.querySelector("#frame");
+const speedValue = document.getElementById("speed-value");
+const frameValue = document.getElementById("frame-value");
+    
+modelViewer.interactionPrompt = 'none';
+
+speedSlider.addEventListener("input", (event) => {
+  modelViewer.animationName = 'Animation';
+  modelViewer.timeScale = event.target.value;
+  modelViewer.play();
+  speedValue.textContent = speedSlider.value;
+});
+
+frameSlider.addEventListener('input', event => {
+  modelViewer.animationName = 'Animation';
+  modelViewer.timeScale = 1;
+  modelViewer.currentTime = event.target.value;
+  modelViewer.pause();
+  frameValue.textContent = Math.round(frameSlider.value /4.08 * 10)/10;
+});
+
+const play = () => {
+  modelViewer.play();
+};
+
+modelViewer.addEventListener('load', play);
+modelViewer.addEventListener('finished', play);
+
+</script>
+  
+</body>
+</html>
